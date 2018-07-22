@@ -186,10 +186,6 @@ def fetch_transit_info(station_from, station_to, search_date_time, search_type, 
         transit_info['searchDateTime'] = search_date_time
         transit_info['searchType'] = search_type
         transit_info['url'] = res.url
-    else:
-        if __name__ == '__main__':
-            with open('resources/yahoo_transit_error_result.html', 'w', encoding='utf-8') as f:
-                f.write(res.content)
 
     return transit_info
 
@@ -224,11 +220,6 @@ def fetch_adjacent_transit_info(url, operation='next'):
     # 直後の検索で利用する場合があるため、以下の項目をセット
     if transit_info is not None:
         transit_info['url'] = res.url
-    else:
-        # @Debug at local env
-        if __name__ == '__main__':
-            with open('resources/yahoo_transit_error_result.html', 'w', encoding='utf-8') as f:
-                f.write(res.content)
 
     return transit_info
 
@@ -303,9 +294,8 @@ def update_session_attributes(session_attributes, transit_info):
         路線情報（検索条件、検索結果）
     """
     save_keys = ['stationFrom', 'stationTo', 'url', 'searchDateTime', 'searchType', 'searchResult']
-    for key in transit_info.keys():
-        if key in save_keys:
-            session_attributes[key] = transit_info[key]
+    for key in save_keys:
+        session_attributes[key] = transit_info.get(key)
 
 
 def intent_SetStation(intent, session):
@@ -398,10 +388,12 @@ def intent_SetDateTime(intent, session):
         speech_output = make_transit_message(transit_info)
         reprompt_text = GV_MSG_PROMPT_LAST
 
-        # 検索条件をセッションに保存
+        # 検索結果をセッションに保存
         if transit_info is not None:
             transit_info['searchResult'] = speech_output
             update_session_attributes(session_attributes, transit_info)
+        else:
+            raise Exception
     except:
         # 現在の検索条件を再度質問
         speech_output = GV_MSG_ERROR
@@ -428,10 +420,12 @@ def intent_NextPrevious(intent, session, operation='next'):
         speech_output = make_transit_message(transit_info)
         reprompt_text = GV_MSG_PROMPT_LAST
 
-        # 検索条件をセッションに保存
+        # 検索結果をセッションに保存
         if transit_info is not None:
             transit_info['searchResult'] = speech_output
             update_session_attributes(session_attributes, transit_info)
+        else:
+            raise Exception
     except:
         speech_output = GV_MSG_ERROR
         reprompt_text = GV_MSG_REPROMPT3
@@ -474,29 +468,26 @@ def intent_CheckCondition(intent, session):
     should_end_session = False
     session_attributes = session['attributes'] if 'attributes' in session else {}
 
-    try:
-        # 路線情報を確認
-        speech_output = '検索条件は、'
-        if 'stationFrom' in session_attributes and 'stationTo' in session_attributes:
-            station_from = session_attributes['stationFrom']
-            station_to = session_attributes['stationTo']
-            speech_output = speech_output + station_from + 'から、' + station_to + 'まで、'
-            reprompt_text = GV_MSG_PROMPT2
-            if 'searchDateTime' in session_attributes and 'searchType' in session_attributes:
-                search_date_time = session_attributes['searchDateTime']
-                search_date_time = re.sub(r'(\d+)-(\d+)-(\d+) (\d+):(\d+)', r'\1年\2月\3日 \4時\5分', search_date_time)
-                search_type = session_attributes['searchType']
-                speech_output = speech_output + search_date_time + '、に' + search_type
-                if search_type == '始発' or search_type == '終電':
-                    speech_output = re.sub('00時.*$', 'の、' + search_type, speech_output)
-                reprompt_text = GV_MSG_PROMPT_LAST
-            speech_output = speech_output + 'です。'
-        else:
-            speech_output = speech_output + 'まだ設定されていません。' + GV_MSG_PROMPT1
-            reprompt_text = GV_MSG_REPROMPT1
-    except:
-        speech_output = GV_MSG_ERROR
-        reprompt_text = GV_MSG_ERROR
+    # 路線情報を確認
+    speech_output = '検索条件は、'
+    station_from = session_attributes.get('stationFrom')
+    station_to = session_attributes.get('stationTo')
+    if station_from is not None and station_to is not None:
+        speech_output = speech_output + station_from + 'から、' + station_to + 'まで、'
+        reprompt_text = GV_MSG_PROMPT2
+
+        search_date_time = session_attributes.get('searchDateTime')
+        search_type = session_attributes.get('searchType')
+        if search_date_time is not None and search_type is not None:
+            search_date_time = re.sub(r'(\d+)-(\d+)-(\d+) (\d+):(\d+)', r'\1年\2月\3日 \4時\5分', search_date_time)
+            speech_output = speech_output + search_date_time + '、に' + search_type
+            if search_type == '始発' or search_type == '終電':
+                speech_output = re.sub('00時.*$', 'の、' + search_type, speech_output)
+            reprompt_text = GV_MSG_PROMPT_LAST
+        speech_output = speech_output + 'です。'
+    else:
+        speech_output = speech_output + 'まだ設定されていません。' + GV_MSG_PROMPT1
+        reprompt_text = GV_MSG_REPROMPT1
 
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
@@ -510,27 +501,22 @@ def intent_LineNotify(intent, session):
     should_end_session = False
     session_attributes = session['attributes'] if 'attributes' in session else {}
 
-    try:
-        # 路線情報を確認
-        if 'searchResult' in session_attributes and 'url' in session_attributes:
-            search_result = session_attributes['searchResult']
-            url = session_attributes['url']
-            data = {'value1': search_result, 'value2': url}
-            r = requests.post(GV_IFTTT_URL, data=data)
-            if r.status_code == 200:
-                speech_output = 'Lineに通知しました。'
-                reprompt_text = GV_MSG_PROMPT_LAST
-            else:
-                speech_output = 'Lineへの通知に失敗しました。'
-                reprompt_text = GV_MSG_ERROR_EXIT
-                should_end_session = True
+    # 路線情報を確認
+    search_result = session_attributes.get('searchResult')
+    url = session_attributes.get('url')
+    if search_result is not None and url is not None:
+        data = {'value1': search_result, 'value2': url}
+        r = requests.post(GV_IFTTT_URL, data=data)
+        if r.status_code == 200:
+            speech_output = 'Lineに通知しました。'
+            reprompt_text = GV_MSG_PROMPT_LAST
         else:
-            speech_output = GV_MSG_PROMPT1
-            reprompt_text = GV_MSG_REPROMPT1
-    except:
-        should_end_session = True
-        speech_output = GV_MSG_ERROR_EXIT
-        reprompt_text = None
+            speech_output = 'Lineへの通知に失敗しました。'
+            reprompt_text = GV_MSG_ERROR_EXIT
+            should_end_session = True
+    else:
+        speech_output = GV_MSG_PROMPT1
+        reprompt_text = GV_MSG_REPROMPT1
 
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
