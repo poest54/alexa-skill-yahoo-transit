@@ -47,9 +47,9 @@ Amazon Alexaに駅名や日時など条件を伝え、[Yahoo!路線情報](https
 
 3. AWS Lambdaを作成
 4. Amazon Alexaスキルを作成
-    - サンプル）設定値JSONファイル： resources/AlexaSkillYahooTransit.json
+    - サンプル）設定値JSONファイル: resources/AlexaSkillYahooTransit.json
 5. AWS Lambda単体でテスト
-    - サンプル）テストイベント用JSONファイル resources/AlexaIntentXXX.json
+    - サンプル）テストイベント用JSONファイル: resources/AlexaIntentXXX.json
 
 ## Author
 
