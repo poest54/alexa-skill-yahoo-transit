@@ -38,14 +38,15 @@ Amazon Alexaに駅名や日時など条件を伝え、[Yahoo!路線情報](https
     ~~~bash
     ZIPファイル作成例:
     $ mkdir lambda_upload
-    $ cp /path/to/yahoo_transit.py .
     $ cd lambda_upload/
+    $ cp /path/to/yahoo_transit.py .
     $ pip3 install requests -t .
     $ pip3 install BeautifulSoup4 -t .
     $ zip lambda_upload.zip *
     ~~~
 
 3. AWS Lambdaを作成
+    - ZIPファイルをアップロード
 4. Amazon Alexaスキルを作成
     - サンプル）設定値JSONファイル: resources/AlexaSkillYahooTransit.json
 5. AWS Lambda単体でテスト
