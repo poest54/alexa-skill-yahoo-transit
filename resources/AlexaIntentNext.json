@@ -1,0 +1,48 @@
+{
+  "session": {
+    "new": false,
+    "sessionId": "amzn1.echo-api.session.at_test_yahoo_transit",
+    "attributes": {
+      "url": "https://transit.yahoo.co.jp/search/result?flatlon=&from=%E6%B8%8B%E8%B0%B7%E9%A7%85&tlatlon=&to=%E6%B5%B7%E6%B5%9C%E5%B9%95%E5%BC%B5%E9%A7%85&viacode=&via=&viacode=&via=&viacode=&via=&y=2018&m=06&d=01&hh=10&m2=0&m1=0&type=4&ticket=ic&expkind=1&ws=2&s=0&shin=1&ex=1&lb=1&kw=%E6%B5%B7%E6%B5%9C%E5%B9%95%E5%BC%B5%E9%A7%85",
+      "stationFrom": "渋谷駅",
+      "stationTo": "海浜幕張駅",
+      "searchDateTime": "2018-06-01 10:00",
+      "searchType": "1"
+    },
+    "user": {
+      "userId": "amzn1.ask.account.at_test_yahoo_transit"
+    },
+    "application": {
+      "applicationId": "amzn1.ask.skill.at_test_yahoo_transit"
+    }
+  },
+  "version": "1.0",
+  "request": {
+    "locale": "en-US",
+    "timestamp": "2016-10-27T21:06:28Z",
+    "type": "IntentRequest",
+    "requestId": "amzn1.echo-api.request.at_test_yahoo_transit",
+    "intent": {
+      "name": "AMAZON.NextIntent",
+      "confirmationStatus": "NONE"
+    }
+  },
+  "context": {
+    "AudioPlayer": {
+      "playerActivity": "IDLE"
+    },
+    "System": {
+      "device": {
+        "supportedInterfaces": {
+          "AudioPlayer": {}
+        }
+      },
+      "application": {
+        "applicationId": "amzn1.ask.skill.at_test_yahoo_transit"
+      },
+      "user": {
+        "userId": "amzn1.ask.account.at_test_yahoo_transit"
+      }
+    }
+  }
+}

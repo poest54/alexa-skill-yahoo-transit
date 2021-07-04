@@ -1,0 +1,74 @@
+{
+  "session": {
+    "new": false,
+    "sessionId": "amzn1.echo-api.session.at_test_yahoo_transit",
+    "attributes": {},
+    "user": {
+      "userId": "amzn1.ask.account.at_test_yahoo_transit"
+    },
+    "application": {
+      "applicationId": "amzn1.ask.skill.at_test_yahoo_transit"
+    }
+  },
+  "version": "1.0",
+  "request": {
+    "locale": "en-US",
+    "timestamp": "2016-10-27T21:06:28Z",
+    "type": "IntentRequest",
+    "requestId": "amzn1.echo-api.request.at_test_yahoo_transit",
+    "intent": {
+      "name": "SetStation",
+      "confirmationStatus": "NONE",
+      "slots": {
+        "StationFrom": {
+          "name": "StationFrom",
+          "value": "渋谷駅",
+          "resolutions": {
+            "resolutionsPerAuthority": [
+              {
+                "authority": "amzn1.er-authority.echo-sdk.amzn1.ask.skill.at_test_yahoo_transit.LIST_OF_STATIONS",
+                "status": {
+                  "code": "ER_SUCCESS_NO_MATCH"
+                }
+              }
+            ]
+          },
+          "confirmationStatus": "NONE"
+        },
+        "StationTo": {
+          "name": "StationTo",
+          "value": "海浜幕張駅",
+          "resolutions": {
+            "resolutionsPerAuthority": [
+              {
+                "authority": "amzn1.er-authority.echo-sdk.amzn1.ask.skill.at_test_yahoo_transit.LIST_OF_STATIONS",
+                "status": {
+                  "code": "ER_SUCCESS_NO_MATCH"
+                }
+              }
+            ]
+          },
+          "confirmationStatus": "NONE"
+        }
+      }
+    }
+  },
+  "context": {
+    "AudioPlayer": {
+      "playerActivity": "IDLE"
+    },
+    "System": {
+      "device": {
+        "supportedInterfaces": {
+          "AudioPlayer": {}
+        }
+      },
+      "application": {
+        "applicationId": "amzn1.ask.skill.at_test_yahoo_transit"
+      },
+      "user": {
+        "userId": "amzn1.ask.account.at_test_yahoo_transit"
+      }
+    }
+  }
+}

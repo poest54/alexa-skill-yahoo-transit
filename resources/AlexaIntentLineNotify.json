@@ -1,0 +1,28 @@
+{
+  "session": {
+    "new": false,
+    "sessionId": "amzn1.echo-api.session.at_test_yahoo_transit",
+    "attributes": {
+      "stationFrom": "渋谷駅",
+      "stationTo": "海浜幕張駅",
+      "searchDateTime": "2018-06-01 10:00",
+      "searchType": "到着",
+      "searchResult": "渋谷駅から海浜幕張駅までの検索結果",
+      "url": "https://www.google.co.jp"
+    },
+    "user": {
+      "userId": "amzn1.ask.account.at_test_yahoo_transit"
+    },
+    "application": {
+      "applicationId": "amzn1.ask.skill.at_test_yahoo_transit"
+    }
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "amzn1.echo-api.request.at_test_yahoo_transit",
+    "intent": {
+      "name": "LineNotify",
+      "confirmationStatus": "NONE"
+    }
+  }
+}

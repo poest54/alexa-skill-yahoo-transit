@@ -1,0 +1,157 @@
+{
+  "interactionModel": {
+      "languageModel": {
+          "invocationName": "ヤフー路線",
+          "intents": [
+              {
+                  "name": "AMAZON.CancelIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.HelpIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.StopIntent",
+                  "samples": [
+                      "ストップ",
+                      "終了",
+                      "Thank you",
+                      "OK"
+                  ]
+              },
+              {
+                  "name": "SetStation",
+                  "slots": [
+                      {
+                          "name": "StationFrom",
+                          "type": "LIST_OF_STATIONS"
+                      },
+                      {
+                          "name": "StationTo",
+                          "type": "LIST_OF_STATIONS"
+                      }
+                  ],
+                  "samples": [
+                      "{StationFrom} から {StationTo} へ",
+                      "{StationFrom} から {StationTo} まで"
+                  ]
+              },
+              {
+                  "name": "SetDateTime",
+                  "slots": [
+                      {
+                          "name": "Date",
+                          "type": "AMAZON.DATE"
+                      },
+                      {
+                          "name": "Time",
+                          "type": "AMAZON.TIME"
+                      },
+                      {
+                          "name": "Type",
+                          "type": "SEARCH_TYPE"
+                      },
+                      {
+                          "name": "Duration",
+                          "type": "AMAZON.DURATION"
+                      }
+                  ],
+                  "samples": [
+                      "{Duration} 後に {Type}",
+                      "{Date} の {Type}",
+                      "{Date} の {Time} に {Type}"
+                  ]
+              },
+              {
+                  "name": "AMAZON.NextIntent",
+                  "samples": [
+                      "一本あと",
+                      "一本あとの電車",
+                      "後ろ",
+                      "後ろの電車",
+                      "次",
+                      "次の電車"
+                  ]
+              },
+              {
+                  "name": "AMAZON.PreviousIntent",
+                  "samples": [
+                      "一本前",
+                      "一本前の電車",
+                      "前",
+                      "前の電車"
+                  ]
+              },
+              {
+                  "name": "AMAZON.RepeatIntent",
+                  "samples": [
+                      "アゲイン",
+                      "もう一度"
+                  ]
+              },
+              {
+                  "name": "CheckCondition",
+                  "slots": [],
+                  "samples": [
+                      "検索条件を確認",
+                      "検索条件は",
+                      "条件は",
+                      "条件を確認"
+                  ]
+              },
+              {
+                  "name": "LineNotify",
+                  "slots": [],
+                  "samples": [
+                      "lineに通知",
+                      "lineして",
+                      "line me"
+                  ]
+              }
+          ],
+          "types": [
+              {
+                  "name": "LIST_OF_STATIONS",
+                  "values": [
+                      {
+                          "name": {
+                              "value": "渋谷駅"
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "海浜幕張駅"
+                          }
+                      }
+                  ]
+              },
+              {
+                  "name": "SEARCH_TYPE",
+                  "values": [
+                      {
+                          "name": {
+                              "value": "終電"
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "始発"
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "到着"
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "出発"
+                          }
+                      }
+                  ]
+              }
+          ]
+      }
+  }
+}
